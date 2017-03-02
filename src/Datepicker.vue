@@ -14,24 +14,31 @@
         <!-- Day View -->
         <div class="calendar" v-show="showDayView" v-bind:style="calendarStyle">
             <header>
-                <span
-                    @click="previousMonth"
-                    class="prev"
-                    v-bind:class="{ 'disabled' : previousMonthDisabled(currDate) }">&lt;</span>
-                <span class="up">{{ currMonthName }}</span>
-                <span
-                    @click="nextMonth"
-                    class="next"
-                    v-bind:class="{ 'disabled' : nextMonthDisabled(currDate) }">&gt;</span>
-                <span
-                    @click="previousYear"
-                    class="prev"
-                    v-bind:class="{ 'disabled' : previousYearDisabled(currDate) }">&lt;</span>
-                <span class="up">{{ currYear }}</span>
-                <span
-                    @click="nextYear"
-                    class="next"
-                    v-bind:class="{ 'disabled' : nextYearDisabled(currDate) }">&gt;</span>
+                <div class="label-container">
+                  <span class="toggle-label">{{ calTitle }}</span>
+                </div>
+                <div class="toggle-container">
+                  <span
+                      @click="previousMonth"
+                      class="prev"
+                      v-bind:class="{ 'disabled' : previousMonthDisabled(currDate) }">&lt;</span>
+                  <span class="up">{{ currMonthName }}</span>
+                  <span
+                      @click="nextMonth"
+                      class="next"
+                      v-bind:class="{ 'disabled' : nextMonthDisabled(currDate) }">&gt;</span>
+                </div>
+                <div class="toggle-container">
+                  <span
+                      @click="previousYear"
+                      class="prev"
+                      v-bind:class="{ 'disabled' : previousYearDisabled(currDate) }">&lt;</span>
+                  <span class="up">{{ currYear }}</span>
+                  <span
+                      @click="nextYear"
+                      class="next"
+                      v-bind:class="{ 'disabled' : nextYearDisabled(currDate) }">&gt;</span>
+                </div>
             </header>
             <span class="cell day-header" v-for="d in daysOfWeek">{{ d }}</span>
             <span class="cell day blank" v-for="d in blankDays"></span><!--
@@ -140,6 +147,9 @@ export default {
     calType: {
       type: String,
       required: true
+    },
+    calTitle: {
+      type: String
     }
   },
   data () {
@@ -189,7 +199,7 @@ export default {
     },
     currMonthName () {
       const d = new Date(this.currDate)
-      return DateUtils.getMonthNameAbbr(d.getMonth(), this.translation.months.abbr)
+      return DateUtils.getMonthNameAbbr(d.getMonth(), this.translation.months.original)
     },
     currYear () {
       const d = new Date(this.currDate)
