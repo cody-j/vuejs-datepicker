@@ -467,10 +467,13 @@ export default {
     },
 
     nextYearDisabled () {
+      let d = new Date(this.currDate)
+      if (d.getFullYear() === new Date().getFullYear()) {
+        return true
+      }
       if (typeof this.disabled === 'undefined' || typeof this.disabled.from === 'undefined' || !this.disabled.from) {
         return false
       }
-      let d = new Date(this.currDate)
       if (this.disabled.from.getFullYear() <= d.getFullYear()) {
         return true
       }
@@ -843,4 +846,3 @@ $width = 300px
     cursor: pointer
     font-style: normal
 </style>
- -->
