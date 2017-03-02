@@ -132,6 +132,10 @@ export default {
     clearButton: {
       type: Boolean,
       default: false
+    },
+    firstYear: {
+      type: Number,
+      default: 2001
     }
   },
   data () {
@@ -446,10 +450,13 @@ export default {
     },
 
     previousYearDisabled () {
+      let d = new Date(this.currDate)
+      if (d.getFullYear() === this.firstYear) {
+        return true
+      }
       if (typeof this.disabled === 'undefined' || typeof this.disabled.to === 'undefined' || !this.disabled.to) {
         return false
       }
-      let d = new Date(this.currDate)
       if (this.disabled.to.getFullYear() >= d.getFullYear()) {
         return true
       }
