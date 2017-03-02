@@ -18,11 +18,20 @@
                     @click="previousMonth"
                     class="prev"
                     v-bind:class="{ 'disabled' : previousMonthDisabled(currDate) }">&lt;</span>
-                <span @click="showMonthCalendar" class="up">{{ currMonthName }} {{ currYear }}</span>
+                <span class="up">{{ currMonthName }}</span>
                 <span
                     @click="nextMonth"
                     class="next"
                     v-bind:class="{ 'disabled' : nextMonthDisabled(currDate) }">&gt;</span>
+                <span
+                    @click="previousYear"
+                    class="prev"
+                    v-bind:class="{ 'disabled' : previousYearDisabled(currDate) }">&lt;</span>
+                <span class="up">{{ currYear }}</span>
+                <span
+                    @click="nextYear"
+                    class="next"
+                    v-bind:class="{ 'disabled' : nextYearDisabled(currDate) }">&gt;</span>
             </header>
             <span class="cell day-header" v-for="d in daysOfWeek">{{ d }}</span>
             <span class="cell day blank" v-for="d in blankDays"></span><!--
@@ -299,10 +308,6 @@ export default {
       this.showDayView = true
       this.$emit('opened')
     },
-    showMonthCalendar () {
-      this.close()
-      this.showMonthView = true
-    },
     showYearCalendar () {
       this.close()
       this.showYearView = true
@@ -354,7 +359,6 @@ export default {
         return false
       }
       this.currDate = year.timestamp
-      this.showMonthCalendar()
     },
 
     /**
@@ -786,7 +790,6 @@ $width = 300px
 
         .prev:not(.disabled)
         .next:not(.disabled)
-        .up:not(.disabled)
             cursor pointer
             &:hover
                 background #eee
@@ -813,11 +816,11 @@ $width = 300px
         &.selected
             background #4bd
             &:hover
-                background #4bd
+                background red
             &.highlighted
                 background #4bd
         &.highlighted
-            background #cae5ed
+            background red
         &.grey
             color #888
 
@@ -840,3 +843,4 @@ $width = 300px
     cursor: pointer
     font-style: normal
 </style>
+ -->
