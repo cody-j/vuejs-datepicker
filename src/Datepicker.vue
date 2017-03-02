@@ -402,7 +402,7 @@ export default {
 
     previousMonthDisabled () {
       let d = new Date(this.currDate)
-      if (this.previousYearDisabled && d.getMonth() === 11) {
+      if (this.previousYearDisabled() && d.getMonth() === 0) {
         return true
       }
       if (typeof this.disabled === 'undefined' || typeof this.disabled.to === 'undefined' || !this.disabled.to) {
@@ -429,10 +429,13 @@ export default {
     },
 
     nextMonthDisabled () {
+      let d = new Date(this.currDate)
+      if (this.nextYearDisabled() && d.getMonth() === new Date().getMonth()) {
+        return true
+      }
       if (typeof this.disabled === 'undefined' || typeof this.disabled.from === 'undefined' || !this.disabled.from) {
         return false
       }
-      let d = new Date(this.currDate)
       if (
         this.disabled.from.getMonth() <= d.getMonth() &&
         this.disabled.from.getFullYear() <= d.getFullYear()
