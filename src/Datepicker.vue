@@ -401,10 +401,13 @@ export default {
     },
 
     previousMonthDisabled () {
+      let d = new Date(this.currDate)
+      if (this.previousYearDisabled && d.getMonth() === 11) {
+        return true
+      }
       if (typeof this.disabled === 'undefined' || typeof this.disabled.to === 'undefined' || !this.disabled.to) {
         return false
       }
-      let d = new Date(this.currDate)
       if (
         this.disabled.to.getMonth() >= d.getMonth() &&
         this.disabled.to.getFullYear() >= d.getFullYear()
