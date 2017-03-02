@@ -136,6 +136,10 @@ export default {
     firstYear: {
       type: Number,
       default: 2001
+    },
+    calType: {
+      type: String,
+      required: true
     }
   },
   data () {
@@ -330,11 +334,27 @@ export default {
       this.$emit('cleared')
     },
 
+    isOutOfRange (day) {
+      let outOfRange = false
+      if (this.calType === 'start') {
+        let unix = this.highlighted.to.getTime()
+        outOfRange = day.timestamp > unix
+      } else {
+        let unix = this.highlighted.from.getTime()
+        outOfRange = day.timestamp < unix
+      }
+      return outOfRange
+    },
+
+    isInFuture (day) {
+      return day.timestamp > new Date().getTime()
+    },
+
     /**
      * @param {Object} day
      */
     selectDate (day) {
-      if (day.isDisabled) {
+      if (day.isDisabled || this.isOutOfRange(day) || this.isInFuture(day)) {
         return false
       }
       this.setDate(day.timestamp)
@@ -430,6 +450,8 @@ export default {
 
     nextMonthDisabled () {
       let d = new Date(this.currDate)
+      if (this.calType === 'start') {
+      }
       if (this.nextYearDisabled() && d.getMonth() === new Date().getMonth()) {
         return true
       }
