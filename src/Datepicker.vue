@@ -21,23 +21,23 @@
                   <span
                       @click="previousMonth"
                       class="prev"
-                      v-bind:class="{ 'disabled' : previousMonthDisabled(currDate) }">&lt;</span>
+                      v-bind:class="{ 'disabled' : previousMonthDisabled(currDate) }"></span>
                   <span class="up">{{ currMonthName }}</span>
                   <span
                       @click="nextMonth"
                       class="next"
-                      v-bind:class="{ 'disabled' : nextMonthDisabled(currDate) }">&gt;</span>
+                      v-bind:class="{ 'disabled' : nextMonthDisabled(currDate) }"></span>
                 </div>
                 <div class="toggle-container">
                   <span
                       @click="previousYear"
                       class="prev"
-                      v-bind:class="{ 'disabled' : previousYearDisabled(currDate) }">&lt;</span>
+                      v-bind:class="{ 'disabled' : previousYearDisabled(currDate) }"></span>
                   <span class="up">{{ currYear }}</span>
                   <span
                       @click="nextYear"
                       class="next"
-                      v-bind:class="{ 'disabled' : nextYearDisabled(currDate) }">&gt;</span>
+                      v-bind:class="{ 'disabled' : nextYearDisabled(currDate) }"></span>
                 </div>
             </header>
             <span class="cell day-header" v-for="d in daysOfWeek">{{ d }}</span>
