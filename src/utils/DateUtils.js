@@ -1,31 +1,18 @@
-'use strict';
+import DateLanguages from './DateLanguages'
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var _DateLanguages = require('./DateLanguages');
-
-var _DateLanguages2 = _interopRequireDefault(_DateLanguages);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = {
+export default {
 
   /**
    * Validates a date object
    * @param {Date} date - an object instantiated with the new Date constructor
    * @return {Boolean}
    */
-  isValidDate: function isValidDate(date) {
+  isValidDate (date) {
     if (Object.prototype.toString.call(date) !== '[object Date]') {
-      return false;
+      return false
     }
-    return !isNaN(date.getTime());
+    return !isNaN(date.getTime())
   },
-
 
   /**
    * Return abbreviated week day name
@@ -33,13 +20,12 @@ exports.default = {
    * @param {Array}
    * @return {String}
    */
-  getDayNameAbbr: function getDayNameAbbr(date, days) {
-    if ((typeof date === 'undefined' ? 'undefined' : _typeof(date)) !== 'object') {
-      throw TypeError('Invalid Type');
+  getDayNameAbbr (date, days) {
+    if (typeof date !== 'object') {
+      throw TypeError('Invalid Type')
     }
-    return days[date.getDay()];
+    return days[date.getDay()]
   },
-
 
   /**
    * Return name of the month
@@ -47,48 +33,45 @@ exports.default = {
    * @param {Array}
    * @return {String}
    */
-  getMonthName: function getMonthName(month, months) {
+  getMonthName (month, months) {
     if (!months) {
-      throw Error('missing 2nd parameter Months array');
+      throw Error('missing 2nd parameter Months array')
     }
-    if ((typeof month === 'undefined' ? 'undefined' : _typeof(month)) === 'object') {
-      return months[month.getMonth()];
+    if (typeof month === 'object') {
+      return months[month.getMonth()]
     }
     if (typeof month === 'number') {
-      return months[month];
+      return months[month]
     }
-    throw TypeError('Invalid type');
+    throw TypeError('Invalid type')
   },
-
 
   /**
    * Return an abbreviated version of the month
    * @param {Number|Date}
    * @return {String}
    */
-  getMonthNameAbbr: function getMonthNameAbbr(month, monthsAbbr) {
+  getMonthNameAbbr (month, monthsAbbr) {
     if (!monthsAbbr) {
-      throw Error('missing 2nd paramter Months array');
+      throw Error('missing 2nd paramter Months array')
     }
-    if ((typeof month === 'undefined' ? 'undefined' : _typeof(month)) === 'object') {
-      return monthsAbbr[month.getMonth()];
+    if (typeof month === 'object') {
+      return monthsAbbr[month.getMonth()]
     }
     if (typeof month === 'number') {
-      return monthsAbbr[month];
+      return monthsAbbr[month]
     }
-    throw TypeError('Invalid type');
+    throw TypeError('Invalid type')
   },
-
 
   /**
    * Returns a UTC date with timezone information removed
    * @param {Date} date
    * @return {Date}
    */
-  convertToUTC: function convertToUTC(date) {
-    return new Date(date.getTime() + date.getTimezoneOffset() * 60000);
+  convertToUTC (date) {
+    return new Date(date.getTime() + (date.getTimezoneOffset() * 60000))
   },
-
 
   /**
    * Return the number of days in the month
@@ -96,10 +79,9 @@ exports.default = {
    * @param {Number} month - month here is equal to getMonth() i.e index based
    * @return {Number}
    */
-  daysInMonth: function daysInMonth(year, month) {
-    return new Date(Date.UTC(year, month + 1, 0)).getUTCDate();
+  daysInMonth (year, month) {
+    return new Date(Date.UTC(year, month + 1, 0)).getUTCDate()
   },
-
 
   /**
    * Returns number of days between two dates
@@ -107,39 +89,37 @@ exports.default = {
    * @param {Date} end
    * @return {Number}
    */
-  dayDiff: function dayDiff(start, end) {
-    var MS_PER_DAY = 1000 * 60 * 60 * 24;
+  dayDiff (start, end) {
+    const MS_PER_DAY = 1000 * 60 * 60 * 24
 
     // Discard the time and time-zone information.
-    var utc1 = Date.UTC(start.getFullYear(), start.getMonth(), start.getDate());
-    var utc2 = Date.UTC(end.getFullYear(), end.getMonth(), end.getDate());
+    let utc1 = Date.UTC(start.getFullYear(), start.getMonth(), start.getDate())
+    let utc2 = Date.UTC(end.getFullYear(), end.getMonth(), end.getDate())
 
-    return Math.floor((utc2 - utc1) / MS_PER_DAY);
+    return Math.floor((utc2 - utc1) / MS_PER_DAY)
   },
-
 
   /**
    * Get nth suffix for date
    * @param {Number} day
    * @return {String}
    */
-  getNthSuffix: function getNthSuffix(day) {
+  getNthSuffix (day) {
     switch (day) {
       case 1:
       case 21:
       case 31:
-        return 'st';
+        return 'st'
       case 2:
       case 22:
-        return 'nd';
+        return 'nd'
       case 3:
       case 23:
-        return 'rd';
+        return 'rd'
       default:
-        return 'th';
+        return 'th'
     }
   },
-
 
   /**
    * Formats date object
@@ -148,15 +128,24 @@ exports.default = {
    * @param {Object}
    * @return {String}
    */
-  formatDate: function formatDate(date, format, translation) {
-    translation = !translation ? _DateLanguages2.default.translations.en : translation;
-    var year = date.getFullYear();
-    var month = date.getMonth() + 1;
-    var day = date.getDate();
-    var str = format.replace(/dd/, ('0' + day).slice(-2)).replace(/d/, day).replace(/yyyy/, year).replace(/yy/, String(year).slice(2)).replace(/MMMM/, this.getMonthName(date.getMonth(), translation.months.original)).replace(/MMM/, this.getMonthNameAbbr(date.getMonth(), translation.months.abbr)).replace(/MM/, ('0' + month).slice(-2)).replace(/M(?!a)/, month).replace(/su/, this.getNthSuffix(date.getDate())).replace(/D(?!e)/, this.getDayNameAbbr(date, translation.days));
-    return str;
+  formatDate (date, format, translation) {
+    translation = (!translation) ? DateLanguages.translations.en : translation
+    let year = date.getFullYear()
+    let month = date.getMonth() + 1
+    let day = date.getDate()
+    let str = format
+      .replace(/dd/, ('0' + day).slice(-2))
+      .replace(/d/, day)
+      .replace(/yyyy/, year)
+      .replace(/yy/, String(year).slice(2))
+      .replace(/MMMM/, this.getMonthName(date.getMonth(), translation.months.original))
+      .replace(/MMM/, this.getMonthNameAbbr(date.getMonth(), translation.months.abbr))
+      .replace(/MM/, ('0' + month).slice(-2))
+      .replace(/M(?!a)/, month)
+      .replace(/su/, this.getNthSuffix(date.getDate()))
+      .replace(/D(?!e)/, this.getDayNameAbbr(date, translation.days))
+    return str
   },
-
 
   /**
    * Creates an array of dates for each day in between two dates.
@@ -164,12 +153,13 @@ exports.default = {
    * @param {Date} end
    * @return {Array}
    */
-  createDateArray: function createDateArray(start, end) {
-    var dates = [];
+  createDateArray (start, end) {
+    let dates = []
     while (start <= end) {
-      dates.push(new Date(start));
-      start = new Date(start).setDate(new Date(start).getDate() + 1);
+      dates.push(new Date(start))
+      start = new Date(start).setDate(new Date(start).getDate() + 1)
     }
-    return dates;
+    return dates
   }
-};
+
+}
