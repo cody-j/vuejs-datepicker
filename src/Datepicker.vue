@@ -787,7 +787,7 @@ export default {
 
 <style lang="stylus">
 
-$width = 300px
+$width = 240px
 
 .datepicker
     position relative
